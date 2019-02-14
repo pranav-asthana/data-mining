@@ -14,14 +14,16 @@ def support_count(itemset):
             sc += 1
     return sc
 
-def generate_itemsets(L1, k, Lj=set()):
-    if k == 2:
-        Lj = L1
+def generate_itemsets(Lj, k):
     Ck = {}
-    for itemset in tqdm(Lj):
-        for item in L1:
-            new_itemset = frozenset(itemset.union(frozenset(item)))
-            Ck[new_itemset] = 0
+    for is1 in Lj:
+        for is2 in Lj:
+            if is1 == is2:
+                continue
+            u = is1.union(is2)
+            if len(u) == k:
+                Ck[u] = 0
+
 
     for t in tqdm(data):
         t = set(t.split(','))
@@ -55,7 +57,7 @@ def main():
     f.write('\n')
     Lprev = L1
     for i in range(2, len(C1)+1):
-        Li = generate_itemsets(list(zip(*L1))[0], i, list(zip(*Lprev))[0])
+        Li = generate_itemsets(list(zip(*Lprev))[0], i)
         l = len(Li)
         total += l
         print("Number of length {} itemsets = {}".format(i, l))

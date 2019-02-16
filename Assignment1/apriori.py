@@ -2,10 +2,10 @@ from tqdm import tqdm
 from pprint import pprint
 import sys
 
-data = list(filter( lambda x: not x == '', open('test_dataset.csv', 'r').read().split('\n')))
-minsup = 2
-# data = list(filter(lambda x: not x == '', open('groceries.csv', 'r').read().split('\n')))
-# minsup = 100
+# data = list(filter( lambda x: not x == '', open('test_dataset.csv', 'r').read().split('\n')))
+# minsup = 2
+data = list(filter(lambda x: not x == '', open('groceries.csv', 'r').read().split('\n')))
+minsup = 100
 minconf = 50
 
 def support_count(itemset):

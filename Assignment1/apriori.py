@@ -24,7 +24,6 @@ def generate_itemsets(Lj, k):
             if len(u) == k:
                 Ck[u] = 0
 
-
     for t in tqdm(data):
         t = set(t.split(','))
         for c in Ck.keys():
@@ -56,11 +55,30 @@ def main():
     _ = [f.write(",".join(c[0])+" ({})\n".format(c[1])) for c in L1]
     f.write('\n')
     Lprev = L1
+    maximal = []
+    closed = []
     for i in range(2, len(C1)+1):
         Li = generate_itemsets(list(zip(*Lprev))[0], i)
         l = len(Li)
         total += l
         print("Number of length {} itemsets = {}".format(i, l))
+
+        ## If an item belongs in Lprev but uska superset not in Li, then item in Lprev is maximal
+        for item1 in Lprev:
+            belongs = False
+            eq_count = False
+            for item2 in Li:
+                ii = item1[0].intersection(item2[0])
+                if ii == item1[0]:
+                    belongs = True
+                if ii == item1[0] and item2[1]==item1[1]:
+                    eq_count = True
+            if not belongs:
+                maximal.append(item1)
+            if not eq_count:
+                closed.append(item1)
+        ## If an item has sc1 in Li and subset has same sc1 in Lprev
+
         if l == 0:
             break
         f.write("Length "+ str(i) +": " + str(l) + '\n')
@@ -68,7 +86,15 @@ def main():
         # f.write(str(Li))
         f.write('\n')
         Lprev = Li
+    f.write("Maximal frequent itemsets: " + str(len(maximal)) + '\n')
+    _ = [f.write(",".join(m[0])+" ({})\n".format(m[1])) for m in maximal]
+    f.write("\n")
+    f.write("Closed frequent itemsets: " + str(len(closed)) + '\n')
+    _ = [f.write(",".join(c[0])+" ({})\n".format(c[1])) for c in closed]
+    f.write("\n")
     print("Total number of frequent itemsets =", total)
+    print("Number of maximal frequent itemsets =", len(maximal))
+    print("Number of closed frequent itemsets =", len(closed))
 
 
 if __name__ == '__main__':

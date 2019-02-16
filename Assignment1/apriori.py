@@ -154,13 +154,11 @@ def main():
     f.write("Closed frequent itemsets: " + str(len(closed)) + '\n')
     _ = [f.write(",".join(c[0])+" ({})\n".format(c[1])) for c in closed]
     f.write("\n")
-    print("Total number of frequent itemsets =", total)
     print("Number of maximal frequent itemsets =", len(maximal))
     print("Number of closed frequent itemsets =", len(closed))
     print("Total number of frequent itemsets = ", total)
 
-    # print(L)
-    #
+    
     freq_items_sup = {}
 
     for i in range(0, len(L)):
@@ -175,9 +173,10 @@ def main():
             X.update(generate_rules(c[0], freq_items_sup, final_rules))
 
     # print("!!!!!!!!!!! final_rules !!!!!!!!!!!!!!!!!!")
-
+    # print(X)
     f = open("output/Assn_Rules_sup:{},conf:{}".format(minsup, minconf), 'w')
     for elem in final_rules:
+        # print("{} ({}) --> {} ({}) - conf({:.2f})".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))
         f.write("{} ({}) --> {} ({}) - conf({:.2f})\n".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))
 
     f.close()

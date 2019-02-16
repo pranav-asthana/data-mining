@@ -1,0 +1,326 @@
+"['condensed milk']" 101
+"['roll products']" 101
+"['flower (seeds)']" 102
+"['dish cleaner']" 103
+"['frozen dessert']" 106
+['salt'] 106
+"['canned vegetables']" 106
+['liquor'] 109
+"['spread cheese']" 110
+"['cling film/bags']" 112
+"['frozen fish']" 115
+['mustard'] 118
+"['packaged fruit/vegetables']" 128
+"['cake bar']" 130
+"['seasonal products']" 140
+"['canned fish']" 148
+['pasta'] 148
+['herbs'] 160
+"['processed cheese']" 163
+"['soft cheese']" 168
+"['potted plants']" 170
+['flour'] 171
+['dishes'] 173
+"['semi-finished bread']" 174
+"['baking powder']" 174
+"['pickled vegetables']" 176
+"['white wine']" 187
+['detergent'] 189
+"['red/blush wine']" 189
+"['chewing gum']" 207
+['grapes'] 220
+"['cat food']" 229
+"['hard cheese']" 241
+"['sliced cheese']" 241
+"['ice cream']" 246
+['meat'] 254
+['beverages'] 256
+['ham'] 256
+"['specialty bar']" 269
+"['butter milk']" 275
+['oil'] 276
+"['misc. beverages']" 279
+"['frozen meals']" 279
+['candy'] 294
+"['specialty chocolate']" 299
+['onions'] 305
+"['hygiene articles']" 324
+"['hamburger meat']" 327
+['berries'] 327
+['UHT-milk'] 329
+['sugar'] 333
+['dessert'] 365
+"['long life bakery product']" 368
+"['salty snack']" 372
+['waffles'] 378
+"['cream cheese']" 390
+"['white bread']" 414
+['chicken'] 422
+"['frozen vegetables']" 473
+['chocolate'] 488
+['napkins'] 515
+['beef'] 516
+['curd'] 524
+['butter'] 545
+['pork'] 567
+['coffee'] 571
+['margarine'] 576
+['frankfurter'] 580
+"['domestic eggs']" 624
+"['brown bread']" 638
+"['whipped/sour cream']" 705
+"['fruit/vegetable juice']" 711
+"['pip fruit']" 744
+"['canned beer']" 764
+['newspapers'] 785
+"['bottled beer']" 792
+"['citrus fruit']" 814
+['pastry'] 875
+['sausage'] 924
+"['shopping bags']" 969
+"['tropical fruit']" 1032
+"['root vegetables']" 1072
+"['bottled water']" 1087
+['yogurt'] 1372
+['soda'] 1715
+['rolls/buns'] 1809
+"['other vegetables']" 1903
+"['whole milk']" 2513
+"['whole milk', 'sliced cheese']" 106
+"['whole milk', 'ham']" 113
+"['other vegetables', 'butter milk']" 102
+"['whole milk', 'butter milk']" 114
+"['oil', 'whole milk']" 111
+"['whole milk', 'onions']" 119
+"['other vegetables', 'onions']" 140
+"['hygiene articles', 'whole milk']" 126
+"['other vegetables', 'hamburger meat']" 136
+"['hamburger meat', 'whole milk']" 145
+"['other vegetables', 'berries']" 101
+"['berries', 'yogurt']" 104
+"['berries', 'whole milk']" 116
+"['other vegetables', 'sugar']" 106
+"['whole milk', 'sugar']" 148
+"['dessert', 'other vegetables']" 114
+"['dessert', 'whole milk']" 135
+"['long life bakery product', 'other vegetables']" 105
+"['long life bakery product', 'whole milk']" 133
+"['salty snack', 'other vegetables']" 106
+"['salty snack', 'whole milk']" 110
+"['whole milk', 'waffles']" 125
+"['yogurt', 'cream cheese']" 122
+"['other vegetables', 'cream cheese']" 135
+"['whole milk', 'cream cheese']" 162
+"['soda', 'white bread']" 101
+"['other vegetables', 'white bread']" 135
+"['white bread', 'whole milk']" 168
+"['root vegetables', 'chicken']" 107
+"['whole milk', 'chicken']" 173
+"['other vegetables', 'chicken']" 176
+"['frozen vegetables', 'rolls/buns']" 100
+"['frozen vegetables', 'root vegetables']" 114
+"['frozen vegetables', 'yogurt']" 122
+"['frozen vegetables', 'other vegetables']" 175
+"['frozen vegetables', 'whole milk']" 201
+"['rolls/buns', 'chocolate']" 116
+"['other vegetables', 'chocolate']" 125
+"['soda', 'chocolate']" 133
+"['whole milk', 'chocolate']" 164
+"['rolls/buns', 'napkins']" 115
+"['soda', 'napkins']" 118
+"['napkins', 'yogurt']" 121
+"['other vegetables', 'napkins']" 142
+"['whole milk', 'napkins']" 194
+"['beef', 'yogurt']" 115
+"['rolls/buns', 'beef']" 134
+"['beef', 'root vegetables']" 171
+"['other vegetables', 'beef']" 194
+"['beef', 'whole milk']" 209
+"['tropical fruit', 'curd']" 101
+"['whipped/sour cream', 'curd']" 103
+"['root vegetables', 'curd']" 107
+"['other vegetables', 'curd']" 169
+"['yogurt', 'curd']" 170
+"['whole milk', 'curd']" 257
+"['whipped/sour cream', 'butter']" 100
+"['butter', 'root vegetables']" 127
+"['rolls/buns', 'butter']" 132
+"['yogurt', 'butter']" 144
+"['other vegetables', 'butter']" 197
+"['whole milk', 'butter']" 271
+"['rolls/buns', 'pork']" 111
+"['soda', 'pork']" 117
+"['pork', 'root vegetables']" 134
+"['other vegetables', 'pork']" 213
+"['pork', 'whole milk']" 218
+"['rolls/buns', 'coffee']" 108
+"['other vegetables', 'coffee']" 132
+"['whole milk', 'coffee']" 184
+"['soda', 'margarine']" 100
+"['bottled water', 'margarine']" 101
+"['margarine', 'root vegetables']" 109
+"['margarine', 'yogurt']" 140
+"['rolls/buns', 'margarine']" 145
+"['other vegetables', 'margarine']" 194
+"['whole milk', 'margarine']" 238
+"['frankfurter', 'root vegetables']" 100
+"['frankfurter', 'yogurt']" 110
+"['frankfurter', 'soda']" 111
+"['frankfurter', 'other vegetables']" 162
+"['frankfurter', 'rolls/buns']" 189
+"['frankfurter', 'whole milk']" 202
+"['domestic eggs', 'citrus fruit']" 102
+"['domestic eggs', 'tropical fruit']" 112
+"['domestic eggs', 'soda']" 122
+"['domestic eggs', 'yogurt']" 141
+"['domestic eggs', 'root vegetables']" 141
+"['domestic eggs', 'rolls/buns']" 154
+"['domestic eggs', 'other vegetables']" 219
+"['domestic eggs', 'whole milk']" 295
+"['brown bread', 'root vegetables']" 100
+"['tropical fruit', 'brown bread']" 105
+"['sausage', 'brown bread']" 105
+"['soda', 'brown bread']" 124
+"['rolls/buns', 'brown bread']" 124
+"['brown bread', 'yogurt']" 143
+"['other vegetables', 'brown bread']" 184
+"['whole milk', 'brown bread']" 248
+"['whipped/sour cream', 'citrus fruit']" 107
+"['soda', 'whipped/sour cream']" 114
+"['tropical fruit', 'whipped/sour cream']" 136
+"['rolls/buns', 'whipped/sour cream']" 144
+"['whipped/sour cream', 'root vegetables']" 168
+"['whipped/sour cream', 'yogurt']" 204
+"['other vegetables', 'whipped/sour cream']" 284
+"['whipped/sour cream', 'whole milk']" 317
+"['fruit/vegetable juice', 'citrus fruit']" 102
+"['shopping bags', 'fruit/vegetable juice']" 105
+"['fruit/vegetable juice', 'root vegetables']" 118
+"['tropical fruit', 'fruit/vegetable juice']" 135
+"['fruit/vegetable juice', 'bottled water']" 140
+"['rolls/buns', 'fruit/vegetable juice']" 143
+"['soda', 'fruit/vegetable juice']" 181
+"['fruit/vegetable juice', 'yogurt']" 184
+"['other vegetables', 'fruit/vegetable juice']" 207
+"['fruit/vegetable juice', 'whole milk']" 262
+"['bottled water', 'pip fruit']" 104
+"['pastry', 'pip fruit']" 105
+"['sausage', 'pip fruit']" 106
+"['soda', 'pip fruit']" 131
+"['citrus fruit', 'pip fruit']" 136
+"['rolls/buns', 'pip fruit']" 137
+"['pip fruit', 'root vegetables']" 153
+"['yogurt', 'pip fruit']" 177
+"['tropical fruit', 'pip fruit']" 201
+"['other vegetables', 'pip fruit']" 257
+"['whole milk', 'pip fruit']" 296
+"['canned beer', 'rolls/buns']" 111
+"['canned beer', 'shopping bags']" 112
+"['canned beer', 'soda']" 136
+"['bottled water', 'newspapers']" 111
+"['newspapers', 'root vegetables']" 113
+"['tropical fruit', 'newspapers']" 116
+"['soda', 'newspapers']" 144
+"['yogurt', 'newspapers']" 151
+"['other vegetables', 'newspapers']" 190
+"['rolls/buns', 'newspapers']" 194
+"['whole milk', 'newspapers']" 269
+"['rolls/buns', 'bottled beer']" 134
+"['bottled water', 'bottled beer']" 155
+"['other vegetables', 'bottled beer']" 159
+"['soda', 'bottled beer']" 167
+"['whole milk', 'bottled beer']" 201
+"['sausage', 'citrus fruit']" 111
+"['soda', 'citrus fruit']" 126
+"['bottled water', 'citrus fruit']" 133
+"['rolls/buns', 'citrus fruit']" 165
+"['citrus fruit', 'root vegetables']" 174
+"['tropical fruit', 'citrus fruit']" 196
+"['citrus fruit', 'yogurt']" 213
+"['other vegetables', 'citrus fruit']" 284
+"['whole milk', 'citrus fruit']" 300
+"['pastry', 'root vegetables']" 108
+"['shopping bags', 'pastry']" 117
+"['sausage', 'pastry']" 123
+"['tropical fruit', 'pastry']" 130
+"['pastry', 'yogurt']" 174
+"['rolls/buns', 'pastry']" 206
+"['soda', 'pastry']" 207
+"['other vegetables', 'pastry']" 222
+"['whole milk', 'pastry']" 327
+"['sausage', 'bottled water']" 118
+"['sausage', 'tropical fruit']" 137
+"['sausage', 'root vegetables']" 147
+"['sausage', 'shopping bags']" 154
+"['sausage', 'yogurt']" 193
+"['sausage', 'soda']" 239
+"['sausage', 'other vegetables']" 265
+"['sausage', 'whole milk']" 294
+"['sausage', 'rolls/buns']" 301
+"['shopping bags', 'bottled water']" 108
+"['shopping bags', 'root vegetables']" 126
+"['shopping bags', 'tropical fruit']" 133
+"['shopping bags', 'yogurt']" 150
+"['shopping bags', 'rolls/buns']" 192
+"['other vegetables', 'shopping bags']" 228
+"['shopping bags', 'whole milk']" 241
+"['shopping bags', 'soda']" 242
+"['tropical fruit', 'bottled water']" 182
+"['tropical fruit', 'soda']" 205
+"['tropical fruit', 'root vegetables']" 207
+"['tropical fruit', 'rolls/buns']" 242
+"['tropical fruit', 'yogurt']" 288
+"['other vegetables', 'tropical fruit']" 353
+"['tropical fruit', 'whole milk']" 416
+"['bottled water', 'root vegetables']" 154
+"['soda', 'root vegetables']" 183
+"['rolls/buns', 'root vegetables']" 239
+"['yogurt', 'root vegetables']" 254
+"['other vegetables', 'root vegetables']" 466
+"['whole milk', 'root vegetables']" 481
+"['bottled water', 'yogurt']" 226
+"['rolls/buns', 'bottled water']" 238
+"['other vegetables', 'bottled water']" 244
+"['soda', 'bottled water']" 285
+"['whole milk', 'bottled water']" 338
+"['soda', 'yogurt']" 269
+"['rolls/buns', 'yogurt']" 338
+"['other vegetables', 'yogurt']" 427
+"['whole milk', 'yogurt']" 551
+"['other vegetables', 'soda']" 322
+"['rolls/buns', 'soda']" 377
+"['soda', 'whole milk']" 394
+"['other vegetables', 'rolls/buns']" 419
+"['rolls/buns', 'whole milk']" 557
+"['other vegetables', 'whole milk']" 736
+"['other vegetables', 'whole milk', 'butter']" 113
+"['other vegetables', 'pork', 'whole milk']" 100
+"['domestic eggs', 'other vegetables', 'whole milk']" 121
+"['other vegetables', 'whipped/sour cream', 'yogurt']" 100
+"['whipped/sour cream', 'yogurt', 'whole milk']" 107
+"['other vegetables', 'whipped/sour cream', 'whole milk']" 144
+"['other vegetables', 'fruit/vegetable juice', 'whole milk']" 103
+"['other vegetables', 'whole milk', 'pip fruit']" 133
+"['other vegetables', 'citrus fruit', 'root vegetables']" 102
+"['whole milk', 'citrus fruit', 'yogurt']" 101
+"['other vegetables', 'whole milk', 'citrus fruit']" 128
+"['other vegetables', 'whole milk', 'pastry']" 104
+"['sausage', 'other vegetables', 'whole milk']" 100
+"['tropical fruit', 'whole milk', 'root vegetables']" 118
+"['other vegetables', 'tropical fruit', 'root vegetables']" 121
+"['tropical fruit', 'rolls/buns', 'whole milk']" 108
+"['other vegetables', 'tropical fruit', 'yogurt']" 121
+"['tropical fruit', 'whole milk', 'yogurt']" 149
+"['other vegetables', 'tropical fruit', 'whole milk']" 168
+"['other vegetables', 'rolls/buns', 'root vegetables']" 120
+"['rolls/buns', 'root vegetables', 'whole milk']" 125
+"['other vegetables', 'yogurt', 'root vegetables']" 127
+"['whole milk', 'yogurt', 'root vegetables']" 143
+"['other vegetables', 'whole milk', 'root vegetables']" 228
+"['other vegetables', 'whole milk', 'bottled water']" 106
+"['soda', 'yogurt', 'whole milk']" 103
+"['other vegetables', 'rolls/buns', 'yogurt']" 113
+"['rolls/buns', 'yogurt', 'whole milk']" 153
+"['other vegetables', 'whole milk', 'yogurt']" 219
+"['other vegetables', 'soda', 'whole milk']" 137
+"['other vegetables', 'rolls/buns', 'whole milk']" 176

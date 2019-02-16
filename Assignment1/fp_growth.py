@@ -1,22 +1,11 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[32]:
-
 
 import pandas as pd
-#from collections import Counter
 
-
-# In[33]:
 
 
 df = pd.read_csv('C:/Users/Sahil/Downloads/groceries.csv', sep='delimiter', header=None)
 df.columns = ['items']
 dataSet = list(df['items'].apply(lambda x: x.split(',')))
-
-
-# In[42]:
 
 
 
@@ -134,10 +123,6 @@ def minetree(headertable,s,f,support):
                 minetree(new_header,ss,f,support)
 
 
-# In[47]:
-
-
-
 data = init_data(dataSet)
 header = create_tree(data, 100)
 frequent_items = {}
@@ -146,17 +131,10 @@ minetree(header, set([]), frequent_items, 100)
 print(frequent_items)
 #print(confidence_data)
 
-
-# In[61]:
-
-
 l_keys = [list(item) for item in list(frequent_items.keys())]
 l_supports = list(frequent_items.values())
 
-
-# In[62]:
-
-
+#I should really learn how to write to a txt file :( I got very irritated trying to figure it out
 l1_k = []
 l1_s = []
 l2_k = []
@@ -176,26 +154,13 @@ for i in range (0,len(l_keys)):
         l3_s.append(l_supports[i])
 
 
-# In[74]:
-
-
 final_k = l1_k + l2_k + l3_k
 final_s = l1_s + l2_s + l3_s
-
-#df.to_csv(r'c:\data\pandas.txt', header=None, index=None, sep=' ', mode='a')
-
-
-# In[76]:
 
 
 df_new = pd.DataFrame()
 df_new['itemsets'] = final_k
 df_new['supports'] = final_s
 df_new.to_csv('C:/Users/Sahil/Downloads/sup_100.txt', header=None, index=None, sep=' ', mode='a')
-
-
-# In[ ]:
-
-
 
 

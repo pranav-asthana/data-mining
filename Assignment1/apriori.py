@@ -178,6 +178,6 @@ def main():
     f.close()
 
     print("Total number of association rules = {}".format(len(final_rules)))
-    
+
 if __name__ == '__main__':
     main()

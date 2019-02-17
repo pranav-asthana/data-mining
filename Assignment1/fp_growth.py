@@ -125,7 +125,68 @@ def minetree(headertable,s,f,support):
             if new_header is not None:
                 minetree(new_header,ss,f,support)
 
+def find_confidence(rule, freq_items_sup):
+
+    confidence = freq_items_sup[rule[0].union(rule[1])]/freq_items_sup[rule[0]]
+    confidence *= 100
+    return confidence
+
+def generate_rules(itemset, freq_items_sup, final_rules, X):
+    LPrev = []
+    # X = {}  #dictionary that stores rule(tuple) with it's confidence
+    for i in itemset:
+        t = frozenset([i])
+        u = (itemset.difference(t) ,t)
+        if find_confidence(u,freq_items_sup) >= minconf:
+            X[u] = find_confidence(u,freq_items_sup)
+            LPrev.append(u)
+
+    final_rules.extend(LPrev)
+
+    Li = []
+    #to make sure no repeated elements
+    LPrev = list(set(LPrev))
+
+    while 1:
+        if len(LPrev) <= 1:
+            return X
+        for i in LPrev:
+            for j in LPrev:
+                if i == j:
+                    continue
+                #combine the two rules
+                rhs = i[1].union(j[1])
+                lhs = i[0].union(j[0])
+                lhs = lhs.difference(rhs)
+
+                if len(lhs) == 0:
+                    return X
+
+                s = (lhs, rhs)
+                fc = find_confidence(s, freq_items_sup)
+                if  fc >= minconf:
+                    X[s] = fc
+                    Li.append(s)
+
+        #to make sure no repeated elements
+        Li = list(set(Li))
+        LPrev = Li
+        final_rules.extend(LPrev)
+
+def assn_rule_gen(X, L, freq_items_sup, final_rules):
+
+    for i in range(0, len(L)):
+        for c in L[i]:
+            freq_items_sup[c[0]] = c[1]
+
+    for i in range(1, len(L)):
+        for c in L[i]:
+            X.update(generate_rules(c[0], freq_items_sup, final_rules, X))
+
+    return X
+
 def main():
+    global minsup, minconf
     minconf = 50
     minsup = 100
     df = pd.read_csv('groceries.csv', sep='delimiter', header=None)
@@ -155,7 +216,26 @@ def main():
     _ = [f.write(",".join(c[0]) + " ({})\n".format(c[1])) for c in frequent_items.items()]
     f.close()
 
-    
+    L = {}
+    for itemset in frequent_items.items():
+        fs = frozenset(itemset[0])
+        sc = itemset[1]
+        L[len(fs)] = L.get(len(fs), []) + [(fs, sc)]
+    res = []
+    for k in sorted(L.keys()):
+        res.append(L[k])
+
+    X = {}
+    final_rules = []
+    freq_items_sup = {}
+    X = assn_rule_gen(X, res, freq_items_sup, final_rules)
+
+    f = open("output_fp/Assn_Rules_sup:{},conf:{}".format(minsup, minconf), 'w')
+    for elem in final_rules:
+        f.write("{} ({}) --> {} ({}) - conf({:.2f})\n".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))
+    f.close()
+
+    print("Total number of association rules = {}".format(len(final_rules)))
 
 if __name__ == '__main__':
     main()

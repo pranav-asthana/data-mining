@@ -37,13 +37,11 @@ def find_confidence(rule, freq_items_sup):
 
     confidence = freq_items_sup[rule[0].union(rule[1])]/freq_items_sup[rule[0]]
     confidence *= 100
-    # print("confidence")
-    # print(confidence)
     return confidence
 
-def generate_rules(itemset, freq_items_sup, final_rules):
+def generate_rules(itemset, freq_items_sup, final_rules, X):
     LPrev = []
-    X = {}  #dictionary that stores rule(tuple) with it's confidence
+    # X = {}  #dictionary that stores rule(tuple) with it's confidence
     for i in itemset:
         t = frozenset([i])
         u = (itemset.difference(t) ,t)
@@ -59,7 +57,6 @@ def generate_rules(itemset, freq_items_sup, final_rules):
 
     while 1:
         if len(LPrev) <= 1:
-            # print("Reached end @@")
             return X
         for i in LPrev:
             for j in LPrev:
@@ -71,7 +68,6 @@ def generate_rules(itemset, freq_items_sup, final_rules):
                 lhs = lhs.difference(rhs)
 
                 if len(lhs) == 0:
-                    # print("Reached end")
                     return X
 
                 s = (lhs, rhs)
@@ -84,6 +80,18 @@ def generate_rules(itemset, freq_items_sup, final_rules):
         Li = list(set(Li))
         LPrev = Li
         final_rules.extend(LPrev)
+
+def assn_rule_gen(X, L, freq_items_sup, final_rules):
+
+    for i in range(0, len(L)):
+        for c in L[i]:
+            freq_items_sup[c[0]] = c[1]
+
+    for i in range(1, len(L)):
+        for c in L[i]:
+            X.update(generate_rules(c[0], freq_items_sup, final_rules, X))
+
+    return X
 
 def main():
     global minsup
@@ -158,27 +166,18 @@ def main():
     print("Number of closed frequent itemsets =", len(closed))
     print("Total number of frequent itemsets = ", total)
 
-    
-    freq_items_sup = {}
-
-    for i in range(0, len(L)):
-        for c in L[i]:
-            freq_items_sup[c[0]] = c[1]
-
-    final_rules = []
-
     X = {}
-    for i in range(1, len(L)):
-        for c in L[i]:
-            X.update(generate_rules(c[0], freq_items_sup, final_rules))
+    final_rules = []
+    freq_items_sup = {}
+    X = assn_rule_gen(X, L, freq_items_sup, final_rules)
 
-    # print("!!!!!!!!!!! final_rules !!!!!!!!!!!!!!!!!!")
-    # print(X)
     f = open("output/Assn_Rules_sup:{},conf:{}".format(minsup, minconf), 'w')
     for elem in final_rules:
-        # print("{} ({}) --> {} ({}) - conf({:.2f})".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))
         f.write("{} ({}) --> {} ({}) - conf({:.2f})\n".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))
 
     f.close()
+
+    print("Total number of association rules = {}".format(len(final_rules)))
+    
 if __name__ == '__main__':
     main()

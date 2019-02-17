@@ -40,8 +40,9 @@ def find_confidence(rule, freq_items_sup):
     return confidence
 
 def generate_rules(itemset, freq_items_sup, final_rules, X):
-    LPrev = []
-    # X = {}  #dictionary that stores rule(tuple) with it's confidence
+    LPrev = []  #Stores the list of rules of the prev level in lattice
+
+    #to generate rules in the first level
     for i in itemset:
         t = frozenset([i])
         u = (itemset.difference(t) ,t)
@@ -166,11 +167,14 @@ def main():
     print("Number of closed frequent itemsets =", len(closed))
     print("Total number of frequent itemsets = ", total)
 
-    X = {}
-    final_rules = []
-    freq_items_sup = {}
+
+    X = {} #dict that stores a tuple of (lhs,rhs) of the rule with it's confidence
+    final_rules = [] #list of final rules    
+    freq_items_sup = {} #dict that stores itemset with it's sup_count  
+
     X = assn_rule_gen(X, L, freq_items_sup, final_rules)
 
+    #writing results to output file
     f = open("output/Assn_Rules_sup:{},conf:{}".format(minsup, minconf), 'w')
     for elem in final_rules:
         f.write("{} ({}) --> {} ({}) - conf({:.2f})\n".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))

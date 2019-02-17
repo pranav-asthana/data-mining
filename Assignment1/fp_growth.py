@@ -1,9 +1,7 @@
 import pandas as pd
 import sys
-
-df = pd.read_csv('groceries.csv', sep='delimiter', header=None)
-df.columns = ['items']
-dataSet = list(df['items'].apply(lambda x: x.split(',')))
+from pprint import pprint
+from tqdm import tqdm
 
 class TreeNode:
     def __init__(self,value,count,parent):
@@ -12,6 +10,15 @@ class TreeNode:
         self.parent = parent
         self.nodelink = None
         self.children = {}
+    def __str__(self):
+        res = self.__repr__() + "\n"
+        res += "value: " + str(self.value) + "\n"
+        res += "count: " + str(self.count) + "\n"
+        res += "parent: {" + str(self.parent) + "}\n"
+        res += "nodelink: {" + str(self.nodelink) + "}\n"
+        res += "children: " + str(self.children) + "\n"
+        res += "\n"
+        return res
 
 
 #make a dictionary of the transactions in the datast and increment if duplicate
@@ -119,8 +126,16 @@ def minetree(headertable,s,f,support):
                 minetree(new_header,ss,f,support)
 
 def main():
-    minsup = 100
     minconf = 50
+    minsup = 100
+    df = pd.read_csv('groceries.csv', sep='delimiter', header=None)
+
+    # minsup = 2
+    # df = pd.read_csv('test_dataset.csv', sep='delimiter', header=None)
+
+    df.columns = ['items']
+    dataSet = list(df['items'].apply(lambda x: x.split(',')))
+
     if len(sys.argv) > 2:
         minsup = int(sys.argv[1])
         minconf = int(sys.argv[2])
@@ -132,44 +147,17 @@ def main():
     header = create_tree(data, minsup)
     frequent_items = {}
     minetree(header, set([]), frequent_items, minsup)
-    #confidence_data = get_confidence(support_data, .6)
-    print(len(frequent_items.items()))
+
+    print("Number of frequent itemsets generated:", len(frequent_items.items()))
+    # print(frequent_items)
+
     f = open('output_fp/Freq_Items_sup:{}'.format(minsup), 'w')
     _ = [f.write(",".join(c[0]) + " ({})\n".format(c[1])) for c in frequent_items.items()]
     f.close()
-    #print(confidence_data)
 
-    # l_keys = [list(item) for item in list(frequent_items.keys())]
-    # l_supports = list(frequent_items.values())
-    #
-    # #I should really learn how to write to a txt file :( I got very irritated trying to figure it out
-    # l1_k = []
-    # l1_s = []
-    # l2_k = []
-    # l2_s = []
-    # l3_k = []
-    # l3_s = []
-    # for i in range (0,len(l_keys)):
-    #     lenght = len(l_keys[i])
-    #     if(lenght==1):
-    #         l1_k.append(l_keys[i])
-    #         l1_s.append(l_supports[i])
-    #     elif(lenght==2):
-    #         l2_k.append(l_keys[i])
-    #         l2_s.append(l_supports[i])
-    #     elif(lenght==3):
-    #         l3_k.append(l_keys[i])
-    #         l3_s.append(l_supports[i])
-    #
-    #
-    # final_k = l1_k + l2_k + l3_k
-    # final_s = l1_s + l2_s + l3_s
-    #
-    #
-    # df_new = pd.DataFrame()
-    # df_new['itemsets'] = final_k
-    # df_new['supports'] = final_s
-    # df_new.to_csv('output_fp/sup_100.txt', header=None, index=None, sep=' ', mode='a')
+    
 
 if __name__ == '__main__':
     main()
+    # for i in range(100):
+    #     main()

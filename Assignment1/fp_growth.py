@@ -136,7 +136,7 @@ def generate_rules(itemset, freq_items_sup, final_rules, X):
     # X = {}  #dictionary that stores rule(tuple) with it's confidence
     for i in itemset:
         t = frozenset([i])
-        u = (itemset.difference(t) ,t)
+        u = (itemset.difference(t), t)
         if find_confidence(u,freq_items_sup) >= minconf:
             X[u] = find_confidence(u,freq_items_sup)
             LPrev.append(u)
@@ -144,7 +144,7 @@ def generate_rules(itemset, freq_items_sup, final_rules, X):
     final_rules.extend(LPrev)
 
     Li = []
-    #to make sure no repeated elements
+    # To make sure no repeated elements
     LPrev = list(set(LPrev))
 
     while 1:
@@ -154,7 +154,7 @@ def generate_rules(itemset, freq_items_sup, final_rules, X):
             for j in LPrev:
                 if i == j:
                     continue
-                #combine the two rules
+                # Combine the two rules
                 rhs = i[1].union(j[1])
                 lhs = i[0].union(j[0])
                 lhs = lhs.difference(rhs)
@@ -168,7 +168,7 @@ def generate_rules(itemset, freq_items_sup, final_rules, X):
                     X[s] = fc
                     Li.append(s)
 
-        #to make sure no repeated elements
+        # To make sure no repeated elements
         Li = list(set(Li))
         LPrev = Li
         final_rules.extend(LPrev)

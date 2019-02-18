@@ -2,9 +2,9 @@ from tqdm import tqdm
 from pprint import pprint
 import sys
 
-# data = list(filter( lambda x: not x == '', open('test_dataset.csv', 'r').read().split('\n')))
+data = list(filter( lambda x: not x == '', open('test_dataset.csv', 'r').read().split('\n')))
 # minsup = 2
-data = list(filter(lambda x: not x == '', open('groceries.csv', 'r').read().split('\n')))
+# data = list(filter(lambda x: not x == '', open('groceries.csv', 'r').read().split('\n')))
 minsup = 100
 minconf = 50
 
@@ -57,6 +57,7 @@ def generate_rules(itemset, freq_items_sup, final_rules, X):
     LPrev = list(set(LPrev))
 
     while 1:
+        # print('-')
         if len(LPrev) <= 1:
             return X
         for i in LPrev:
@@ -84,11 +85,11 @@ def generate_rules(itemset, freq_items_sup, final_rules, X):
 
 def assn_rule_gen(X, L, freq_items_sup, final_rules):
 
-    for i in range(0, len(L)):
+    for i in tqdm(range(0, len(L))):
         for c in L[i]:
             freq_items_sup[c[0]] = c[1]
 
-    for i in range(1, len(L)):
+    for i in tqdm(range(1, len(L))):
         for c in L[i]:
             X.update(generate_rules(c[0], freq_items_sup, final_rules, X))
 
@@ -174,9 +175,31 @@ def main():
 
     X = assn_rule_gen(X, L, freq_items_sup, final_rules)
 
+    # print("FINAL RULES")
+    # print(final_rules)
+
+    redundant_rules = []
+    # Removing redundant generate_rules
+    for i in range(0, len(final_rules)-1):
+        for j in range(i+1, len(final_rules)):
+            if X[final_rules[i]] == X[final_rules[j]]\
+               and freq_items_sup[final_rules[i][0]] == freq_items_sup[final_rules[j][0]]\
+               and freq_items_sup[final_rules[i][1]] == freq_items_sup[final_rules[j][1]]:
+                # pass
+                if(set(final_rules[j][0]).issubset(set(final_rules[i][0]))\
+                   and set(final_rules[j][1]).issubset(set(final_rules[i][1]))):
+                    redundant_rules.append(final_rules[j])
+
+                elif (set(final_rules[i][0]).issubset(set(final_rules[j][0]))\
+                      and set(final_rules[i][1]).issubset(set(final_rules[j][1]))):
+                    redundant_rules.append(final_rules[i])
+
+    
+    final_rules = list(set(final_rules) - set(redundant_rules))
+
     #writing results to output file
     f = open("output/Assn_Rules_sup:{},conf:{}".format(minsup, minconf), 'w')
-    for elem in final_rules:
+    for elem in tqdm(final_rules):
         f.write("{} ({}) --> {} ({}) - conf({:.2f})\n".format(set(elem[0]), freq_items_sup[elem[0]], set(elem[1]), freq_items_sup[elem[1]], X[elem]))
 
     f.close()

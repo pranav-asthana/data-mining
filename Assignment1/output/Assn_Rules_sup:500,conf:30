@@ -1,3 +1,4 @@
-{'rolls/buns'} (1809) --> {'whole milk'} (2513) - conf(30.79)
+Association rules:
 {'yogurt'} (1372) --> {'whole milk'} (2513) - conf(40.16)
 {'other vegetables'} (1903) --> {'whole milk'} (2513) - conf(38.68)
+{'rolls/buns'} (1809) --> {'whole milk'} (2513) - conf(30.79)

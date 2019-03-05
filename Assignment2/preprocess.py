@@ -1,4 +1,4 @@
-from acid import AminoAcid
+from sequence import AminoAcid
 from tqdm import tqdm
 from tqdm import trange
 from pprint import pprint
@@ -51,15 +51,18 @@ def alignment_score(seq1, seq2, match=0, mismatch=-1, indel=-1):
     return dp[m%2][n]
 
 
-def get_similarity_matrix(amino_acids, match, mismatch, indel):
+def get_similarity_matrix(name, amino_acids, match, mismatch, indel):
     l = len(amino_acids)
-    file_path = os.path.join(data_dir, 'similarity_{}_{}_{}.pkl'.format(match, mismatch, indel))
+    file_path = os.path.join(data_dir, name.split('.')[0]+'_similarity_{}_{}_{}.pkl'.format(match, mismatch, indel))
     if os.path.exists(file_path):
         f = open(file_path, 'rb')
         similarity = pkl.load(f)
         f.close()
     else:
         similarity = np.zeros((l, l))
+
+    if not similarity[l-1][l-2] == 0: # Already done
+        return similarity
 
     with tqdm(total=sum([l-i for i in range(l)])) as pbar:
         for i in range(l):
@@ -93,7 +96,7 @@ def main():
     mismatch = int(sys.argv[2]) if len(sys.argv) > 2 else 1
     indel = int(sys.argv[3]) if len(sys.argv) > 3 else 2
 
-    similarity = get_similarity_matrix(amino_acids, match, mismatch, indel)
+    similarity = get_similarity_matrix('AminoAcidSequences.fa', amino_acids, match, mismatch, indel)
 
 
 if __name__ == '__main__':

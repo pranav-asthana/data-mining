@@ -13,6 +13,7 @@ class Cluster:
         self.cluster_id = Cluster.cluster_count
         Cluster.cluster_count += 1
         Cluster.instances.append(self)
+        self.num_total_members = sum([m.num_total_members if isinstance(m, Cluster) else 1 for m in members])
         self.members = members
 
     def add_member(self, p):  # p can be a single point or a Cluster object
@@ -60,8 +61,16 @@ class Cluster:
             res += str(m) + '\n'
         return res+'-----\n'
 
+    def get(self):
+        if len(self.members) == 1:
+            return self.members[0].sequence
+        c = []
+        for m in self.members:
+            c.append(m.get())
+        return c
 
-def merge_clusters(clusters, similarity, index_dict, dist_metric="MIN"):
+
+def merge_clusters(similarity, index_dict, dist_metric="MIN"):
     min_distance = math.inf
     mini, minj = 0, 1
     l = len(Cluster.similarity)
@@ -71,12 +80,12 @@ def merge_clusters(clusters, similarity, index_dict, dist_metric="MIN"):
                 min_distance = Cluster.similarity[i][j]
                 mini = i
                 minj = j
-    c1 = clusters[mini]
-    c2 = clusters[minj]
+    c1 = Cluster.instances[mini]
+    c2 = Cluster.instances[minj]
     # print(mini, minj)
-    print(min_distance)
-    print(c1)
-    print(c2)
+    # print(min_distance)
+    # print(c1.cluster_id)
+    # print(c2.cluster_id)
     new_cluster = Cluster([c1, c2])
     Cluster.instances[mini] = Cluster.instances[-1]
     del Cluster.instances[minj]
@@ -87,11 +96,28 @@ def merge_clusters(clusters, similarity, index_dict, dist_metric="MIN"):
     Cluster.similarity = np.delete(Cluster.similarity, (minj), axis=1)
 
     # Update similarity for cluster i
-    new_row = [new_cluster.distance(c, similarity, index_dict) for c in Cluster.instances]
+    new_row = [new_cluster.distance(c, similarity, index_dict, dist_metric) if not c==new_cluster else 0 for c in Cluster.instances]
+    # print([c.cluster_id for c in Cluster.instances])
+    # print(new_row)
     Cluster.similarity[mini, :] = new_row
+    Cluster.similarity[:, mini] = new_row
 
     return Cluster.instances
 
+def draw_dendrogram():
+    from scipy.cluster import hierarchy
+    import matplotlib.pyplot as plt
+
+    clusters = Cluster.instances[0].get()
+    total_len = lambda x: sum(total_len(el) if isinstance(el, list) else 1 for el in x)
+    print(total_len(clusters))
+    print(clusters)
+    
+
+    # X = np.random.rand(15, 15)
+    # dendro = ff.create_dendrogram(X)
+    # dendro['layout'].update({'width':800, 'height':500})
+    # py.iplot(dendro, filename='simple_dendrogram')
 
 
 def main():
@@ -109,16 +135,18 @@ name_dict = {a.name: a.sequence for a in amino_acids}
 index_dict = {a.name: i for i, a in enumerate(amino_acids)}
 reverse_index_dict = {i: a.name for i, a in enumerate(amino_acids)}
 
-clusters = [Cluster([a]) for a in amino_acids]
+_ = [Cluster([a]) for a in amino_acids]
 # while len(clusters) > 1:
-print("Number of clusters: ", len(clusters))
+print("Number of clusters: ", len(Cluster.instances))
 print(Cluster.similarity)
 print()
-while len(Cluster.similarity) > 1:
-    clusters = merge_clusters(clusters, similarity, index_dict, dist_metric="MIN")
+while len(Cluster.instances) > 1:
+    merge_clusters(similarity, index_dict, dist_metric="MAX")
+    print("Number of clusters: ", len(Cluster.instances))
     print(Cluster.similarity)
     print()
 
+draw_dendrogram()
 
 
 

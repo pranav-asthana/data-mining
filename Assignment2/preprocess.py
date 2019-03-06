@@ -6,6 +6,7 @@ import numpy as np
 import pickle as pkl
 import os
 import sys
+
 import time
 import _thread
 
@@ -22,7 +23,8 @@ def read_data(fname):
             curr = AminoAcid()
             curr.name = line[1:]
             continue
-        curr.sequence += line[:-1]
+        curr.sequence += line
+    curr.sequence = curr.sequence[:-1]
     amino_acids.append(curr)
     amino_acids = amino_acids[1:]
     return amino_acids
@@ -91,7 +93,7 @@ def get_similarity_matrix(name, amino_acids, match, mismatch, indel):
 
 def main():
     amino_acids = read_data('AminoAcidSequences.fa')
-
+    
     match = int(sys.argv[1]) if len(sys.argv) > 1 else 0
     mismatch = int(sys.argv[2]) if len(sys.argv) > 2 else 1
     indel = int(sys.argv[3]) if len(sys.argv) > 3 else 2

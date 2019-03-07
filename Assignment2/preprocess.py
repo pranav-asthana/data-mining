@@ -19,6 +19,7 @@ def read_data(fname):
     for line in f:
         line = line.replace('\n', '')
         if '>' in line:
+            curr.sequence = curr.sequence[:-1]
             amino_acids.append(curr)
             curr = AminoAcid()
             curr.name = line[1:]

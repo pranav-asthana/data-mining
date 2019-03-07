@@ -14,9 +14,11 @@ class Cluster:
         self.members.append(p)
 
     def find_medioid(self, similarity):
+        # set medioid to first member by default
         medioid = self.members[0]
         l = len(self.members)
         min_sse = math.inf
+        # change medioid to point with lowest total squ distance from hte rest of the points
         for i in range(l):
             sse = 0
             for j in range(l):
@@ -38,7 +40,6 @@ def get_clusters(list_medioid, points, similarity, index_dict):
         
     # For each point, find the medioid it is closest to and add to that cluster
     for x in range(len(points)):
-        # compare with each of the medioids
         min_dist = math.inf
         index_closest = -1
         for i in range(len(list_medioid)):
@@ -46,8 +47,9 @@ def get_clusters(list_medioid, points, similarity, index_dict):
                 min_dist = similarity[x][index_dict[list_medioid[i].name]]
                 index_closest = i
         
-        clusters[index_closest].members.append(points[x])        
+        clusters[index_closest].add_point(points[x])        
 
+    # To avoid repetions in the list
     for c in clusters:
         c.members = list(set(c.members))
 
@@ -89,7 +91,7 @@ def main():
             print("Reached end in {} iterations".format(iter_num))
             print("Final clusters")
             for i in range(len(list_medioid)):
-                print("{} : {}".format(i , list(map(lambda x: x.name, clusters[i].members))))
+                print("{} : {}".format(i , list(map(lambda x: x.sequence, clusters[i].members))))
 
             return clusters
 

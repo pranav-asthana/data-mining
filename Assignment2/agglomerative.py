@@ -104,7 +104,11 @@ def draw_dendrogram(dist_metric, fname, reverse_index_dict):
     import matplotlib.pyplot as plt
 
     print("Generating and saving dendrogram")
+    plt.rcParams.update({'font.size': 26})
     plt.figure(figsize=(40, 25))
+    plt.title("Agglomerative clustering ({}): {}".format(dist_metric, fname))
+    plt.xlabel("Amino acid sequences")
+    plt.ylabel("Distance")
     labels = list(zip(*sorted(reverse_index_dict.items(), key=lambda x: x[0])))[1]
     dendro = hierarchy.dendrogram(Cluster.linkage_matrix, labels=labels)
     # plt.show()
@@ -114,7 +118,7 @@ def draw_dendrogram(dist_metric, fname, reverse_index_dict):
 
 def main():
     distance_metric = sys.argv[1] if len(sys.argv) > 1 else "MIN"
-    fname = sys.argv[2] if len(sys.argv) > 2 else "AminoAcidSequences.fa"
+    fname = sys.argv[2] if len(sys.argv) > 2 else "AminoAcidSequences0.fa"
 
     amino_acids = read_data(fname)
     similarity = get_similarity_matrix(fname, amino_acids, match=0, mismatch=1, indel=2)

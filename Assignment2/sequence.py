@@ -3,4 +3,4 @@ class AminoAcid:
         self.name = name
         self.sequence = sequence
     def __str__(self):
-        return '>' + self.name + '\n' + self.sequence
+        return self.sequence

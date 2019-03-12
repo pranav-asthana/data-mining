@@ -31,7 +31,7 @@ def read_data(fname):
     return amino_acids
 
 
-def alignment_score(seq1, seq2, match=0, mismatch=-1, indel=-1):
+def alignment_score(seq1, seq2, match=0, mismatch=1, indel=1):
     if seq1 == seq2:
         return len(seq1)*match
     m, n = len(seq1), len(seq2)
@@ -94,7 +94,7 @@ def get_similarity_matrix(name, amino_acids, match, mismatch, indel):
 
 def main():
     amino_acids = read_data('AminoAcidSequences.fa')
-    
+
     match = int(sys.argv[1]) if len(sys.argv) > 1 else 0
     mismatch = int(sys.argv[2]) if len(sys.argv) > 2 else 1
     indel = int(sys.argv[3]) if len(sys.argv) > 3 else 2

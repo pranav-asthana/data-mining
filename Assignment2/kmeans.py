@@ -37,17 +37,17 @@ def get_clusters(list_medioid, points, similarity, index_dict):
     for i in range(len(list_medioid)):
         clusters[i].members =[]
         clusters[i].members.append(list_medioid[i])
-        
+
     # For each point, find the medioid it is closest to and add to that cluster
     for x in range(len(points)):
         min_dist = math.inf
         index_closest = -1
         for i in range(len(list_medioid)):
-            if similarity[x][index_dict[list_medioid[i].name]] < min_dist: 
+            if similarity[x][index_dict[list_medioid[i].name]] < min_dist:
                 min_dist = similarity[x][index_dict[list_medioid[i].name]]
                 index_closest = i
-        
-        clusters[index_closest].add_point(points[x])        
+
+        clusters[index_closest].add_point(points[x])
 
     # To avoid repetions in the list
     for c in clusters:
@@ -57,7 +57,7 @@ def get_clusters(list_medioid, points, similarity, index_dict):
 
 def main():
     num_cluster = int(sys.argv[1]) if len(sys.argv) > 1 else 2
-    fname = sys.argv[2] if len(sys.argv) > 2 else "AminoAcidSequences.fa"
+    fname = sys.argv[2] if len(sys.argv) > 2 else "AminoAcidSequences0.fa"
 
     amino_acids = read_data(fname)
     similarity = get_similarity_matrix(fname, amino_acids, match=0, mismatch=1, indel=2)
@@ -69,7 +69,7 @@ def main():
 
     #select num_cluster random points from list of amino_acids
     list_medioid_index = random.sample(range(len(amino_acids)), num_cluster)
-    
+
     list_medioid = []   # list of amino_acid objects
     for x in range(len(list_medioid_index)):
         list_medioid.append(amino_acids[list_medioid_index[x]])
@@ -91,11 +91,18 @@ def main():
             print("Reached end in {} iterations".format(iter_num))
             print("Final clusters")
             for i in range(len(list_medioid)):
-                print("{} : {}".format(i , list(map(lambda x: x.sequence, clusters[i].members))))
+                if not os.path.exists('Results/kmeans/{}_clusters/'.format(num_cluster)):
+                    os.system('mkdir Results/kmeans/{}_clusters/'.format(num_cluster))
+
+                f = open('Results/kmeans/{}_clusters/cluster_{}'.format(num_cluster, i), 'w')
+                f.write("\n".join(["(member {}) ".format(i) + x.name + ': ' + x.sequence for i, x in enumerate(clusters[i].members)]))
+                # f.write("\n".join(list(map(lambda x: x.name, clusters[i].members))))
+                f.close()
+                print("Cluster {}: {} members".format(i , len(clusters[i].members)))
 
             return clusters
 
-        # else update medioid list 
+        # else update medioid list
         else:
             list_medioid = new_list_medioid
 

@@ -175,6 +175,8 @@ def main():
     print("Number of closed frequent itemsets =", len(closed))
     print("Total number of frequent itemsets = ", total)
 
+    # Rule Generation
+
     X = {}  # dict that stores a tuple of (lhs,rhs) of the rule with it's confidence
     final_rules = []  # list of final rules
     freq_items_sup = {}  # dict that stores itemset with it's sup_count
@@ -188,10 +190,12 @@ def main():
     # Removing redundant generate_rules
     for i in range(0, len(final_rules)-1):
         for j in range(i+1, len(final_rules)):
+            # have equal confidence and support count and lhs and rhs are subset 
+            # of another rule's lhs and rhs respectively
             if X[final_rules[i]] == X[final_rules[j]]\
                and freq_items_sup[final_rules[i][0]] == freq_items_sup[final_rules[j][0]]\
                and freq_items_sup[final_rules[i][1]] == freq_items_sup[final_rules[j][1]]:
-                # pass
+
                 if(set(final_rules[j][0]).issubset(set(final_rules[i][0]))\
                    and set(final_rules[j][1]).issubset(set(final_rules[i][1]))):
                     redundant_rules.add(final_rules[j])

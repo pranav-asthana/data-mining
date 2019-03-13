@@ -57,7 +57,7 @@ def splinter(similarity, index_dict):
 def split_clusters(similarity, index_dict, amino_acids):
     '''
     1. Find cluster with max diameter
-    2. Find splinter element: Element farthest away from max diameter cluster's centroid
+    2. Find splinter element: Element farthest away from max diameter cluster
     3. Reassign points between the cluster being divided and the new splinter cluster
     4. Repeat 1,2,3 until all clusters have a single element
     '''

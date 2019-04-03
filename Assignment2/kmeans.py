@@ -59,15 +59,15 @@ def main():
     num_cluster = int(sys.argv[1]) if len(sys.argv) > 1 else 2
     fname = sys.argv[2] if len(sys.argv) > 2 else "AminoAcidSequences0.fa"
 
-    amino_acids = read_data(fname)
-    similarity = get_similarity_matrix(fname, amino_acids, match=0, mismatch=1, indel=2)
+    amino_acids = read_data(fname)  # List of amino acids
+    similarity = get_similarity_matrix(fname, amino_acids, match=0, mismatch=1, indel=2)    # Similarity distance matrix
 
     # print(similarity)
     # dictionary mapping name to index in amino_acid list
     index_dict = {a.name: i for i, a in enumerate(amino_acids)}
 
 
-    #select num_cluster random points from list of amino_acids
+    #select num_cluster random unique points from list of amino_acids
     list_medioid_index = random.sample(range(len(amino_acids)), num_cluster)
 
     list_medioid = []   # list of amino_acid objects

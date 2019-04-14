@@ -2,10 +2,11 @@ from preprocess import *
 import matplotlib.pyplot as plt
 
 data_dir = "data/"
+fname = 'german.data-numeric'
 eps = 10
 min_points = 80
 
-def label_points(points):
+def label_points(points, distance_matrix):
     fname = 'dbscan_labelled_{}_{}.pkl'.format(eps, min_points)
     if fname in os.listdir(data_dir):
         f = open(os.path.join(data_dir, fname), 'rb')
@@ -16,20 +17,17 @@ def label_points(points):
     border = []
     noise = []
 
-    for point in tqdm(points):
-        if len(get_neighbours(points, point, eps)) >= min_points:
-            core.append(point)
-    for point in tqdm(points):
-        if point in core: continue
-        neighbours = get_neighbours(points, point, eps)
-        if not set(neighbours).intersection(set(core)) == set():
-            border.append(point)
-        else:
-            noise.append(point)
+    neighbours = [get_neighbours(points, p, eps, distance_matrix) for p in tqdm(points)]
 
-    print(len(core))
-    print(len(border))
-    print(len(noise))
+    for i in range(len(points)):
+        if len(neighbours[i]) >= min_points:
+            core.append(points[i])
+    for i in range(len(points)):
+        if points[i] in core: continue
+        if not set(neighbours[i]).intersection(set(core)) == set():
+            border.append(points[i])
+        else:
+            noise.append(points[i])
 
     f = open(os.path.join(data_dir, fname), 'wb')
     pkl.dump((core, border, noise), f)
@@ -37,31 +35,29 @@ def label_points(points):
     return core, border, noise
 
 
-def get_neighbours(points, center, eps):
+def get_neighbours(points, center, eps, distance_matrix):
     neighbours = []
-    for point in points:
+    for i in range(len(points)):
+        point = points[i]
         if point == center: continue
 
-        d = np.linalg.norm(point.attr-center.attr)
+        d = distance_matrix[points.index(center)][i]
         if d < eps:
             neighbours.append(point)
     return neighbours
 
-def determine_eps(fname, points, k=4):
+def determine_eps(fname, points, distance_matrix, k=4):
     print("Determining eps...")
     overall = []
-    for p in tqdm(points):
-        distances = []
-        for p2 in points:
-            if p == p2: continue
-            distances.append(np.linalg.norm(p.attr-p2.attr))
+    for i in trange(len(points)):
+        distances = distance_matrix[i,:]
         overall.append(sorted(distances)[k])
     overall = sorted(overall)
 
     plt.plot(np.arange(0, len(overall)), overall)
-    plt.savefig('Results/DBSCAN/' + fname + '_elbow_'+str(k)+'.png')
+    # plt.savefig('Results/DBSCAN/' + fname + '_elbow_'+str(k)+'.png')
+    plt.show()
     plt.close()
-    # plt.show()
 
 def evaluate(core, border, noise):
     TP = 0
@@ -104,11 +100,11 @@ def main():
 
     eps, min_points = int(sys.argv[1]), int(sys.argv[2])
 
-    transactions = read_data(data_dir, 'german.data-numeric')
-    # distance_matrix = get_distance_matrix(transactions, data_dir)
+    transactions = read_data(data_dir, fname)
+    distance_matrix = get_distance_matrix(transactions, data_dir)
 
 
-    # determine_eps(fname, transactions, 4)
+    # determine_eps(fname, transactions, distance_matrix, 4)
 
     # points = []
     # for center in tqdm(transactions):
@@ -121,7 +117,7 @@ def main():
     #         distances.append(np.linalg.norm(p.attr-p2.attr))
     # print(np.mean(distances))
 
-    core, border, noise = label_points(transactions)
+    core, border, noise = label_points(transactions, distance_matrix)
     print(len(core))
     print(len(border))
     print(len(noise))

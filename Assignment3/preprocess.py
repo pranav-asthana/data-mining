@@ -34,7 +34,7 @@ def read_data(data_dir, fname):
 
 
 def distance(a, b):  # Cosine distance
-    return 1 - np.dot(a, b)/(np.linalg.norm(a)* np.linalg.norm(b))
+    return np.linalg.norm(a-b)
 
 def get_distance_matrix(transactions, data_dir='data/', fname='distance_matrix.pkl'):
     if fname in os.listdir(data_dir):
@@ -61,13 +61,12 @@ def get_distance_matrix(transactions, data_dir='data/', fname='distance_matrix.p
 def main():
     data_dir = "data/"
     t = read_data(data_dir, 'german.data-numeric')
-    
+
     for i in range(5):
         print(t[i])
 
-    # dist = get_distance_matrix(t, data_dir, 'creditcard_dist.pkl')
-
-    # print(dist.shape)
+    dist = get_distance_matrix(t, data_dir, 'creditcard_dist.pkl')
+    print(dist.shape)
     # print(dist)
 
 if __name__ == '__main__':

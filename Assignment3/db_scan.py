@@ -66,21 +66,21 @@ def evaluate(core, border, noise):
     FN = 0
     for p in core+border:
         if p.label == 1:
-            TP += 1
-        else:
-            FP += 1
-    for p in noise:
-        if p.label == 2:
             TN += 1
         else:
             FN += 1
+    for p in noise:
+        if p.label == 2:
+            TP += 1
+        else:
+            FP += 1
 
     print("\n\t     CONFUSION MATRIX")
     print("\t\t| Actual Class\t| Total")
-    print("                | GOOD\tFRAUD")
+    print("                | OUT\tIN")
     print("Predicted Class +---------------+---------------")
-    print("GOOD\t\t| "+str(TP)+"\t"+str(FP)+"\t| "+str(TP+FP))
-    print("FRAUD\t\t| "+str(FN)+"\t"+str(TN)+"\t| "+str(FN+TN))
+    print("OUT\t\t| "+str(TP)+"\t"+str(FP)+"\t| "+str(TP+FP))
+    print("IN\t\t| "+str(FN)+"\t"+str(TN)+"\t| "+str(FN+TN))
     print("----------------+---------------+---------------")
     print("Total\t\t| "+str(TP+FN)+"\t"+str(FP+TN)+"\t| "+str(FN+TN+TP+FP)+"\n")
 

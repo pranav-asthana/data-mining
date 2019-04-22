@@ -12,8 +12,14 @@ def convert_to_kD(points, k=2):
 def main():
     data_dir = 'data/'
     transactions = read_data(data_dir, 'german.data-numeric')
+
+    for i in range(5):
+        print(transactions[i])
+
     points = pd.DataFrame([t.attr for t in transactions])
     labels = [t.label for t in transactions]
+
+    print(set(points[23]))
 
     points2d = convert_to_kD(points, k=2)
     plt.scatter(points2d[0], points2d[1], c=['red' if l==2 else 'green' for l in labels], marker='.')

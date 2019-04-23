@@ -1,10 +1,12 @@
 from preprocess import *
 import matplotlib.pyplot as plt
+import pandas as pd
+from pprint import pprint
 
 data_dir = "data/"
 fname = 'german.data-numeric'
 eps = 10
-min_points = 80
+min_points = 15
 
 def label_points(points, distance_matrix):
     fname = 'dbscan_labelled_{}_{}.pkl'.format(eps, min_points)
@@ -24,7 +26,7 @@ def label_points(points, distance_matrix):
             core.append(points[i])
     for i in range(len(points)):
         if points[i] in core: continue
-        if not set(neighbours[i]).intersection(set(core)) == set():
+        if not set([n.id for n in neighbours[i]]).intersection([c.id for c in set(core)]) == set():
             border.append(points[i])
         else:
             noise.append(points[i])
@@ -39,10 +41,10 @@ def get_neighbours(points, center, eps, distance_matrix):
     neighbours = []
     for i in range(len(points)):
         point = points[i]
-        if point == center: continue
+        # if point == center: continue  # Decide whether to keep center or not
 
         d = distance_matrix[points.index(center)][i]
-        if d < eps:
+        if d <= eps:  # Points on EPS border also included
             neighbours.append(point)
     return neighbours
 
@@ -106,22 +108,32 @@ def main():
 
     # determine_eps(fname, transactions, distance_matrix, 4)
 
-    # points = []
-    # for center in tqdm(transactions):
-    #     points.append(len(get_neighbours(transactions, center, eps)))
-    # print(np.mean(points))
-    #
-    # distances = []
-    # for p in tqdm(transactions):
-    #     for p2 in transactions:
-    #         distances.append(np.linalg.norm(p.attr-p2.attr))
-    # print(np.mean(distances))
-
     core, border, noise = label_points(transactions, distance_matrix)
     print(len(core))
     print(len(border))
     print(len(noise))
+    # print(len(noise)+len(core)+len(border))
     evaluate(core, border, noise)
+
+    # from sklearn.cluster import DBSCAN
+    # outlier_detection = DBSCAN(
+    #   eps = eps,
+    #   metric="euclidean",
+    #   min_samples = min_points,
+    #   n_jobs = -1)
+    # df = pd.DataFrame([t.attr for t in transactions])
+    # clusters = outlier_detection.fit(df).labels_
+    # mine = [-1 if t.id in [x.id for x in noise] else 0 for t in transactions]
+    # print(clusters)
+    # print(set(clusters))
+    # print(mine)
+    # print(set(mine))
+    # for i in range(1000):
+    #     if not clusters[i] == mine[i]:
+    #         print(transactions[i])
+    #         print("My label: " + str(mine[i]))
+    #         print("Their label: " + str(clusters[i]))
+    # print(sum([clusters[i]==mine[i] for i in range(1000)]))
 
 
 if __name__ == '__main__':

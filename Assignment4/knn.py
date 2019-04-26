@@ -1,3 +1,4 @@
+%%writefile knn.py
 
 # %load knn.py
 #!/usr/bin/env python
@@ -57,14 +58,25 @@ def get_dist_matrix(df):
 #getting the performance graph for different values of k
 def get_performance_graph(accuracy, k_min, k_max, k_step):
     T = np.array([i for i in range(k_min, k_max, k_step)])
-    xnew = np.linspace(1,200,900) 
+    xnew = np.linspace(k_min,k_max,300) 
     spl = make_interp_spline(T, np.array(accuracy), k=3) #BSpline object
     power_smooth = spl(xnew)
     plt.plot(xnew,power_smooth)
     print('k versus accuracy plot')
     plt.show()
     
-    
+#prints the confusion matrix, precision and recall
+def get_metrics(targets, predictions):
+    y_actu = pd.Series(targets, name='Actual')
+    y_pred = pd.Series(predictions, name='Predicted')
+    df_confusion = pd.crosstab(y_actu, y_pred)
+    print(df_confusion)
+    print()
+    for col in list(df_confusion.columns):
+        print('Recall of ', col, ':', (df_confusion[col][col]/sum(list(df_confusion.loc[col,:])))*100)
+        print('Precision of ', col, ':', (df_confusion[col][col]/sum(list(df_confusion.loc[:,col])))*100)
+        print()
+        
 #main driver function  
 def main():
     
@@ -96,8 +108,12 @@ def main():
             preds.append(prediction)
         acc = get_accuracy(list(test['target']), preds)
         print('Accuracy: ', acc)   
+        print()
+        get_metrics(list(test['target']),preds)
         accuracy.append(acc)
         
-
+    get_performance_graph(accuracy, k_min, k_max, k_step)
+    
 if __name__ == '__main__':
     main()
+

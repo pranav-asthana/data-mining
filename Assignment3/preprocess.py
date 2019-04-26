@@ -6,6 +6,7 @@ from tqdm import trange
 import pickle as pkl
 import numpy as np
 import subprocess
+import pandas as pd
 
 
 def read_data(data_dir, fname):
@@ -26,6 +27,16 @@ def read_data(data_dir, fname):
         line = line.split()
         transactions.append(Transaction(len(transactions)+1, [int(attr) for attr in line[:-1]], int(line[-1])))
         pbar.update(1)
+
+    ## NORMALIZATION
+    # df = pd.DataFrame([t.attr for t in transactions])
+    # for scaling_column in range(len(transactions[0].attr)):
+    #     df[scaling_column]=(df[scaling_column]-df[scaling_column].mean())/df[scaling_column].std()
+    # for i in range(len(transactions)):
+    #     # print(list(df.iloc[i]))
+    #     transactions[i].set_attr(list(df.iloc[i]))
+    # # df = pd.DataFrame([t.attr for t in transactions])
+    # # print(df)
 
     f = open(os.path.join(data_dir, fname+'.pkl'), 'wb')
     pkl.dump(transactions, f)
